@@ -40,14 +40,35 @@ const handler = async (req, res) => {
 
       const text = await response.text();
       if (!response.ok) return res.status(response.status).json({ error: text });
+
+      // Parse first, then clean text fields
+      const parsed = JSON.parse(text);
       
-      // Clean cite tags from all text fields before returning
-      const cleaned = text.replace(/<cite\s+index="[^"]*">[^<]*<\/cite>/g, '')
-                          .replace(/<cite[^>]*>/g, '')
-                          .replace(/<\/cite>/g, '')
-                          .replace(/\s{2,}/g, ' ');
-      
-      return res.status(200).json(JSON.parse(cleaned));
+      // Extract text content from response
+      const textContent = (parsed.content || [])
+        .filter(b => b.type === 'text')
+        .map(b => b.text)
+        .join('');
+
+      // Clean cite tags from the text content
+      const cleanedText = textContent
+        .replace(/<cite\s+index="[^"]*">[^<]*<\/cite>/g, '')
+        .replace(/<cite[^>]*>/g, '')
+        .replace(/<\/cite>/g, '')
+        .replace(/  +/g, ' ')
+        .trim();
+
+      // Replace the text content in the parsed response
+      if (parsed.content) {
+        parsed.content = parsed.content.map(b => {
+          if (b.type === 'text') {
+            return { ...b, text: cleanedText };
+          }
+          return b;
+        });
+      }
+
+      return res.status(200).json(parsed);
     } catch (err) {
       return res.status(500).json({ error: err.message });
     }
