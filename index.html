@@ -429,7 +429,17 @@ function updateSummaryCardError(section) {
   if (existing) existing.replaceWith(div); else grid.appendChild(div);
 }
 
+function cleanText(str) {
+  if (!str) return '';
+  // Remove cite tags in all their forms
+  str = str.replace(/<cite\s+index="[^"]*">[\s\S]*?<\/cite>/gi, '');
+  str = str.replace(/<\/?cite[^>]*>/gi, '');
+  str = str.replace(/\s+/g, ' ').trim();
+  return str;
+}
+
 function buildLeadCard(section, lead, isSummary) {
+  lead = { ...lead, headline: cleanText(lead.headline), summary: cleanText(lead.summary) };
   const div = document.createElement('div');
   div.className = 'lead-card';
   div.setAttribute('data-section', section.id);
@@ -464,6 +474,7 @@ function renderSection(section, data) {
     panel.appendChild(h2);
     const grid = document.createElement('div'); grid.className='article-grid';
     data.articles.forEach(a => {
+      a = { ...a, headline: cleanText(a.headline), summary: cleanText(a.summary) };
       const url = a.url?.startsWith('http') ? a.url : '#';
       const card = document.createElement('div'); card.className='article-card';
       card.innerHTML=`<div class="card-headline">${esc(a.headline)}</div><div class="card-summary">${esc(a.summary)}</div><div class="card-footer"><span class="source-tag">${esc(a.source||'News')}</span><a class="read-link" href="${url}" target="_blank" rel="noopener">Read →</a></div>`;
