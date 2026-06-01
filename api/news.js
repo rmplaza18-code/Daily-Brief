@@ -40,7 +40,14 @@ const handler = async (req, res) => {
 
       const text = await response.text();
       if (!response.ok) return res.status(response.status).json({ error: text });
-      return res.status(200).json(JSON.parse(text));
+      
+      // Clean cite tags from all text fields before returning
+      const cleaned = text.replace(/<cite\s+index="[^"]*">[^<]*<\/cite>/g, '')
+                          .replace(/<cite[^>]*>/g, '')
+                          .replace(/<\/cite>/g, '')
+                          .replace(/\s{2,}/g, ' ');
+      
+      return res.status(200).json(JSON.parse(cleaned));
     } catch (err) {
       return res.status(500).json({ error: err.message });
     }
