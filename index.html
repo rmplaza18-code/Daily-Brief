@@ -383,12 +383,15 @@ async function fetchSection(section) {
     if (!res.ok) throw new Error('API error ' + res.status);
     const data = await res.json();
     const text = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    // Strip cite tags from raw text before JSON parsing
+    const stripCite = s => !s ? s : s.replace(/<cite\s+index="[^"]*">[^<]*<\/cite>/g, '').replace(/<\/?cite[^>]*>/g, '').replace(/  +/g, ' ').trim();
+    const cleanedText = stripCite(text);
+    
     let parsed = null;
-    try { parsed = JSON.parse(text.replace(/```json|```/g,'').trim()); } catch(e) {
-      const m = text.match(/\{[\s\S]*\}/); if (m) parsed = JSON.parse(m[0]);
+    try { parsed = JSON.parse(cleanedText.replace(/```json|```/g,'').trim()); } catch(e) {
+      const m = cleanedText.match(/\{[\s\S]*\}/); if (m) { try { parsed = JSON.parse(m[0]); } catch(e2) {} }
     }
-    // Clean cite tags from all text fields
-    const stripCite = s => s ? s.replace(/<cite[^>]*>[^<]*<\/cite>/g,'').replace(/<\/?cite[^>]*>/g,'').replace(/\s+/g,' ').trim() : s;
+    // Also clean parsed fields as backup
     if (parsed) {
       if (parsed.lead) { parsed.lead.headline = stripCite(parsed.lead.headline); parsed.lead.summary = stripCite(parsed.lead.summary); }
       if (parsed.articles) parsed.articles = parsed.articles.map(a => ({...a, headline: stripCite(a.headline), summary: stripCite(a.summary)}));
@@ -527,9 +530,4 @@ function esc(str) {
   if (!str) return '';
   // Strip any <cite ...>...</cite> tags from AI responses
   str = str.replace(/<cite[^>]*>.*?<\/cite>/gi, '');
-  str = str.replace(/<\/?cite[^>]*>/gi, '');
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-</script>
-</body>
-</html>
+  str = str.replace
