@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F0;
+    --bg-card: #FFFFFF;
+    --bg-secondary: #F0EDE8;
+    --text-primary: #1A1A1A;
+    --text-secondary: #555550;
+    --text-muted: #999990;
+    --border: #E2DED8;
+    --border-strong: #C8C4BC;
+    --accent: #1A3A5C;
+    --accent-light: #E8EFF6;
+    --accent-mid: #2E5F8A;
+    --red: #C0392B;
+    --green: #1A7A4A;
+    --red-light: #FBEAEA;
+    --green-light: #E8F5EE;
+    --gold: #B8960C;
+    --gold-light: #FBF6E0;
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'DM Sans', system-ui, sans-serif;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--accent);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left { display: flex; flex-direction: column; gap: 2px; }
+  .header-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: #FFFFFF;
+    letter-spacing: 0.02em;
+  }
+  .header-date { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 0.05em; text-transform: uppercase; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .last-updated { font-size: 11px; color: rgba(255,255,255,0.5); }
+  .refresh-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .refresh-btn:hover { background: rgba(255,255,255,0.2); }
+  .refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .refresh-btn svg { width: 13px; height: 13px; }
+  .spinning { animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* MARKET STRIP */
+  .market-strip {
+    background: #112236;
+    padding: 10px 32px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+  .market-strip::-webkit-scrollbar { display: none; }
+  .market-group { display: flex; gap: 20px; align-items: center; }
+  .market-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.1); margin: 0 16px; }
+  .market-item { display: flex; flex-direction: column; gap: 1px; min-width: 70px; }
+  .market-lbl { font-size: 9px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.07em; }
+  .market-val { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.9); }
+  .market-chg { font-size: 10px; font-weight: 500; }
+  .up { color: #4EC98A; }
+  .down { color: #F07070; }
+  .flat { color: rgba(255,255,255,0.4); }
+
+  /* NAVIGATION */
+  .nav-wrap {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 57px;
+    z-index: 99;
+  }
+  .nav-wrap::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    padding: 12px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .nav-tab:hover { color: var(--text-secondary); }
+  .nav-tab.active { color: var(--accent); font-weight: 500; border-bottom-color: var(--accent); }
+
+  /* MAIN CONTENT */
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 32px 60px; }
+
+  /* TAB PANELS */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION HEADER */
+  .section-hdr {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    margin-top: 32px;
+  }
+  .section-hdr:first-child { margin-top: 0; }
+  .section-name {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+  .section-rule { flex: 1; height: 1px; background: var(--border); }
+
+  /* SUMMARY GRID */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  /* LEAD CARD */
+  .lead-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--accent);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .lead-card.full-width { grid-column: 1 / -1; border-top-color: var(--gold); }
+
+  .card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .section-badge {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+  .lead-tag {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--gold-light);
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .card-headline {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .card-summary {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .source-tag {
+    font-size: 10px;
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .read-link {
+    font-size: 11px;
+    color: var(--accent-mid);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  .read-link:hover { color: var(--accent); }
+  .read-link:visited { color: var(--text-muted); }
+
+  /* ARTICLE GRID */
+  .article-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 680px) { .article-grid { grid-template-columns: 1fr; } }
+
+  .article-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .article-card .card-headline { font-size: 13px; }
+  .article-card .card-summary { font-size: 12px; }
+
+  /* LOADING STATE */
+  .loading-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--border) 50%, var(--bg-secondary) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .skel-title { height: 16px; width: 85%; }
+  .skel-line { height: 12px; width: 100%; }
+  .skel-line-short { height: 12px; width: 65%; }
+  .skel-badge { height: 20px; width: 80px; }
+
+  /* EMPTY / ERROR */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  .empty-state strong { display: block; font-size: 15px; color: var(--text-secondary); margin-bottom: 6px; }
+
+  /* API KEY BANNER */
+  .api-banner {
+    background: #FFF8E6;
+    border: 1px solid #F0D080;
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .api-banner p { font-size: 13px; color: #7A5A00; }
+  .api-banner input {
+    flex: 1;
+    min-width: 200px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    padding: 7px 10px;
+    border: 1px solid #E0C060;
+    border-radius: var(--radius-sm);
+    background: #fff;
+    color: var(--text-primary);
+  }
+  .api-banner button {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 7px 14px;
+    background: #B8960C;
+    border: none;
+    border-radius: var(--radius-sm);
+    color: #fff;
+    cursor: pointer;
+  }
+  .api-banner button:hover { background: #9A7A08; }
+
+  /* SEE ALL LINK */
+  .see-all {
+    font-size: 11px;
+    color: var(--accent-mid);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .see-all:hover { color: var(--accent); }
+
+  /* SECTION PANEL LAYOUT */
+  .section-panel { margin-bottom: 36px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .header { padding: 12px 16px; }
+    .market-strip { padding: 8px 16px; }
+    .nav-wrap { padding: 0 16px; }
+    .main { padding: 20px 16px 60px; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .header-title { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <span class="header-title">Daily Brief</span>
+    <span class="header-date" id="headerDate">Loading...</span>
+  </div>
+  <div class="header-right">
+    <span class="last-updated" id="lastUpdated">Not yet refreshed</span>
+    <button class="refresh-btn" id="settingsBtn" onclick="openSettings()" title="API Key Settings" style="padding:7px 11px; font-size:16px; line-height:1;">&#9881;</button>
+    <button class="refresh-btn" id="refreshBtn" onclick="refreshAll()">
+      <svg id="refreshIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+        <path d="M3 3v5h5"/>
+      </svg>
+      Refresh
+    </button>
+  </div>
+</header>
+
+<div class="market-strip" id="marketStrip">
+  <div class="market-group" id="mktGroup1">
+    <div class="market-item"><div class="market-lbl">PSEi</div><div class="market-val" id="m-psei">—</div></div>
+    <div class="market-item"><div class="market-lbl">S&amp;P 500</div><div class="market-val" id="m-sp500">—</div></div>
+    <div class="market-item"><div class="market-lbl">Nasdaq</div><div class="market-val" id="m-nasdaq">—</div></div>
+    <div class="market-item"><div class="market-lbl">Dow Jones</div><div class="market-val" id="m-dow">—</div></div>
+    <div class="market-item"><div class="market-lbl">VIX</div><div class="market-val" id="m-vix">—</div></div>
+  </div>
+  <div class="market-sep"></div>
+  <div class="market-group">
+    <div class="market-item"><div class="market-lbl">USD/PHP</div><div class="market-val" id="m-usdphp">—</div></div>
+    <div class="market-item"><div class="market-lbl">DXY</div><div class="market-val" id="m-dxy">—</div></div>
+    <div class="market-item"><div class="market-lbl">WTI Oil</div><div class="market-val" id="m-oil">—</div></div>
+  </div>
+  <div class="market-sep"></div>
+  <div class="market-group">
+    <div class="market-item"><div class="market-lbl">PH BVAL 5Y</div><div class="market-val" id="m-bval5">—</div></div>
+    <div class="market-item"><div class="market-lbl">PH BVAL 10Y</div><div class="market-val" id="m-bval10">—</div></div>
+    <div class="market-item"><div class="market-lbl">US 5Y Tsy</div><div class="market-val" id="m-us5y">—</div></div>
+    <div class="market-item"><div class="market-lbl">US 10Y Tsy</div><div class="market-val" id="m-us10y">—</div></div>
+  </div>
+</div>
+
+<nav class="nav-wrap">
+  <div class="nav-tab active" onclick="switchTab('summary')">Summary</div>
+  <div class="nav-tab" onclick="switchTab('ph')">PH Deals &amp; Markets</div>
+  <div class="nav-tab" onclick="switchTab('ib')">IB &amp; PE</div>
+  <div class="nav-tab" onclick="switchTab('infra')">Infrastructure</div>
+  <div class="nav-tab" onclick="switchTab('energy')">Renewables &amp; Energy</div>
+  <div class="nav-tab" onclick="switchTab('tech')">Technology</div>
+  <div class="nav-tab" onclick="switchTab('geo')">Geopolitics</div>
+  <div class="nav-tab" onclick="switchTab('sports')">Sports Business</div>
+</nav>
+
+<main class="main">
+
+  <!-- Settings Modal -->
+  <div id="settingsOverlay" onclick="if(event.target===this)closeSettings()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:999; align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:12px; padding:28px 32px; width:480px; max-width:90vw;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+        <span style="font-family:'Playfair Display',serif; font-size:18px; font-weight:500; color:#1A1A1A;">Settings</span>
+        <button onclick="closeSettings()" style="background:none; border:none; cursor:pointer; font-size:22px; color:#999; line-height:1; padding:0 4px;">&#x2715;</button>
+      </div>
+      <p style="font-size:13px; color:#333; margin-bottom:6px; font-weight:500;">Anthropic API Key</p>
+      <p style="font-size:12px; color:#888; margin-bottom:12px;">Get your key at <a href="https://console.anthropic.com" target="_blank" style="color:#2E5F8A;">console.anthropic.com</a> &#8594; API Keys. Billing must be enabled.</p>
+      <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." style="width:100%; font-size:13px; padding:9px 12px; border:1px solid #E2DED8; border-radius:6px; font-family:'DM Sans',sans-serif; margin-bottom:8px; color:#1A1A1A; box-sizing:border-box;" />
+      <div id="keyStatus" style="font-size:12px; margin-bottom:14px; min-height:16px;"></div>
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button onclick="closeSettings()" style="font-size:13px; padding:8px 16px; border:1px solid #E2DED8; border-radius:6px; background:#fff; cursor:pointer; font-family:'DM Sans',sans-serif; color:#555;">Cancel</button>
+        <button onclick="saveApiKey()" style="font-size:13px; padding:8px 18px; border:none; border-radius:6px; background:#1A3A5C; color:#fff; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500;">Save &amp; Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY TAB -->
+  <div class="tab-panel active" id="panel-summary">
+    <div class="summary-grid" id="summaryGrid">
+      <div class="empty-state" style="grid-column:1/-1">
+        <strong>No stories loaded yet</strong>
+        Hit Refresh to fetch today's top stories across all sections.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION TABS -->
+  <div class="tab-panel" id="panel-ph"></div>
+  <div class="tab-panel" id="panel-ib"></div>
+  <div class="tab-panel" id="panel-infra"></div>
+  <div class="tab-panel" id="panel-energy"></div>
+  <div class="tab-panel" id="panel-tech"></div>
+  <div class="tab-panel" id="panel-geo"></div>
+  <div class="tab-panel" id="panel-sports"></div>
+
+</main>
+
+<script>
+const SECTIONS = [
+  {
+    id: 'ph',
+    label: 'PH Deals & Markets',
+    badge: 'PH Deals',
+    color: '#1A3A5C',
+    prompt: `You are a financial news analyst. Search for the latest news TODAY (use web search) about: Philippine stock market, M&A deals, capital markets, IPOs, bonds, and business news in the Philippines. Focus on major conglomerates: Ayala, SM, ICTSI, Megaworld, JG Summit, San Miguel, PLDT, Globe Telecom, Aboitiz, Metro Pacific. Prioritize sources: BusinessWorld, Philippine Daily Inquirer, Philippine Star, Manila Bulletin, Rappler, ABS-CBN News, Manila Times, Nikkei Asia Philippines, Reuters Philippines, Bloomberg Philippines.
+
+Return a JSON object with this exact structure (no markdown, no backticks, just raw JSON):
+{
+  "lead": {
+    "headline": "...",
+    "summary": "4-5 sentence detailed summary with deal sizes, context, and implications for investors",
+    "source": "Publication name",
+    "url": "https://actual-url-if-found-or-empty-string"
+  },
+  "articles": [
+    {
+      "headline": "...",
+      "summary": "2 sentence summary",
+      "source": "Publication name",
+      "url": "https://actual-url-or-empty"
+    }
+  ]
+}
+Return 1 lead story and 3-4 supporting articles. Only return the JSON, nothing else.`
+  },
+  {
+    id: 'ib',
+    label: 'IB & PE Transactions',
+    badge: 'IB & PE',
+    color: '#2A5A3A',
+    prompt: `You are a financial news analyst. Search for the latest news TODAY about: investment banking deals, M&A transactions, private equity buyouts, LBOs, fundraising, IPOs, and notable financial transactions globally with a focus on US and Asia markets. Include deal values, advisors, and strategic rationale.
+
+Return a JSON object with this exact structure (no markdown, no backticks, just raw JSON):
+{
+  "lead": {
+    "headline": "...",
+    "summary": "4-5 sentence detailed summary with deal sizes, advisors, strategic rationale, and market implications",
+    "source": "Publication name",
+    "url": "https://actual-url-if-found-or-empty-string"
+  },
+  "articles": [
+    {
+      "headline": "...",
+      "summary": "2 sentence summary",
+      "source": "Publication name",
+      "url": "https://actual-url-or-empty"
+    }
+  ]
+}
+Return 1 lead story and 3-4 supporting articles. Only return the JSON, nothing else.`
+  },
+  {
+    id: 'infra',
+    label: 'Infrastructure',
+    badge: 'Infrastructure',
+    color: '#5A3A1A',
+    prompt: `You are a financial news analyst. Search for the latest news TODAY about: infrastructure deals, project finance, toll roads, airports, ports, water utilities, transport, and infrastructure investment globally and in Southeast Asia/Philippines.
+
+Return a JSON object with this exact structure (no markdown, no backticks, just raw JSON):
+{
+  "lead": {
+    "headline": "...",
+    "summary": "4-5 sentence detailed summary with project size, financing structure, and strategic implications",
+    "source": "Publication name",
+    "url": "https://actual-url-if-found-or-empty-string"
+  },
+  "articles": [
+    {
+      "headline": "...",
+      "summary": "2 sentence summary",
+      "source": "Publication name",
+      "url": "https://actual-url-or-empty"
+    }
+  ]
+}
+Return 1 lead story and 3-4 supporting articles. Only return the JSON, nothing else.`
+  },
+  {
+    id: 'energy',
+    label: 'Renewables & Energy',
+    badge: 'Energy',
+    color: '#1A5A3A',
+    prompt: `You are a financial news analyst. Search for the latest news TODAY about: renewable energy deals, solar, wind, energy transition, power sector M&A, energy policy, oil & gas, and the Philippine energy sector specifically.
+
+Return a JSON object with this exact structure (no markdown, no backticks, just raw JSON):
+{
+  "lead": {
+    "headline": "...",
+    "summary": "4-5 sentence detailed summary with capacity, investment size, and policy/market implications",
+    "source": "Publication name",
+    "url": "https://actual-url-if-found-or-empty-string"
+  },
+  "articles": [
+    {
+      "headline": "...",
+      "summary": "2 sentence summary",
+      "source": "Publication name",
+      "url": "https://actual-url-or-empty"
+    }
+  ]
+}
+Return 1 lead story and 3-4 supporting articles. Only return the JSON, nothing else.`
+  },
+  {
+    id: 'tech',
+    label: 'Technology',
+    badge: 'Tech',
+    color: '#3A1A5A',
+    prompt: `You are a financial news analyst. Search for the latest news TODAY about: technology M&A, AI deals, startup funding, Big Tech earnings/strategy, semiconductor industry, and tech policy. Focus on stories with financial/investment implications.
+
+Return a JSON object with this exact structure (no markdown, no backticks, just raw JSON):
+{
+  "lead": {
+    "headline": "...",
+    "summary": "4-5 sentence detailed summary covering deal value, strategic rationale, and market impact",
+    "source": "Publication name",
+    "url": "https://actual-url-if-found-or-empty-string"
+  },
+  "articles": [
+    {
+      "headline": "...",
+      "summary": "2 sentence summary",
+      "source": "Publication name",
+      "url": "https://actual-url-or-empty"
+    }
+  ]
+}
+Return 1 lead story and 3-4 supporting articles. Only return the JSON, nothing else.`
+  },
+  {
+    id: 'geo',
+    label: 'Geopolitics',
+    badge: 'Geopolitics',
+    color: '#5A1A1A',
+    prompt: `You are a financial news analyst. Search for the latest news TODAY about: US-China relations, trade wars, tariffs, Southeast Asia geopolitics, Philippine geopolitical developments, global macroeconomic policy, central bank decisions (Fed, BSP), and geopolitical risks relevant to financial markets.
+
+Return a JSON object with this exact structure (no markdown, no backticks, just raw JSON):
+{
+  "lead": {
+    "headline": "...",
+    "summary": "4-5 sentence detailed summary covering the geopolitical situation and its financial/investment implications",
+    "source": "Publication name",
+    "url": "https://actual-url-if-found-or-empty-string"
+  },
+  "articles": [
+    {
+      "headline": "...",
+      "summary": "2 sentence summary",
+      "source": "Publication name",
+      "url": "https://actual-url-or-empty"
+    }
+  ]
+}
+Return 1 lead story and 3-4 supporting articles. Only return the JSON, nothing else.`
+  },
+  {
+    id: 'sports',
+    label: 'Sports Business',
+    badge: 'Sports Biz',
+    color: '#1A3A5C',
+    prompt: `You are a financial news analyst. Search for the latest news TODAY about: sports M&A, team valuations and sales, sports media rights deals, league expansions, athlete endorsements with financial significance, sports private equity, and the business of sports globally.
+
+Return a JSON object with this exact structure (no markdown, no backticks, just raw JSON):
+{
+  "lead": {
+    "headline": "...",
+    "summary": "4-5 sentence detailed summary with transaction value, strategic rationale, and industry implications",
+    "source": "Publication name",
+    "url": "https://actual-url-if-found-or-empty-string"
+  },
+  "articles": [
+    {
+      "headline": "...",
+      "summary": "2 sentence summary",
+      "source": "Publication name",
+      "url": "https://actual-url-or-empty"
+    }
+  ]
+}
+Return 1 lead story and 3-4 supporting articles. Only return the JSON, nothing else.`
+  }
+];
+
+const MARKET_TICKERS = [
+  { id: 'm-psei', symbol: 'PSEI.PS', type: 'price' },
+  { id: 'm-sp500', symbol: '^GSPC', type: 'price' },
+  { id: 'm-nasdaq', symbol: '^IXIC', type: 'price' },
+  { id: 'm-dow', symbol: '^DJI', type: 'price' },
+  { id: 'm-vix', symbol: '^VIX', type: 'price' },
+  { id: 'm-usdphp', symbol: 'PHP=X', type: 'price' },
+  { id: 'm-dxy', symbol: 'DX-Y.NYB', type: 'price' },
+  { id: 'm-oil', symbol: 'CL=F', type: 'price' },
+  { id: 'm-us5y', symbol: '^FVX', type: 'yield' },
+  { id: 'm-us10y', symbol: '^TNX', type: 'yield' }
+];
+
+let API_KEY = 'YOUR_API_KEY_HERE'; // Set properly in DOMContentLoaded
+let cachedData = JSON.parse(localStorage.getItem('db_cache') || '{}');
+let isRefreshing = false;
+
+// --- INIT ---
+document.addEventListener('DOMContentLoaded', () => {
+  updateDate();
+  // Always validate key on load — clears stale/revoked keys automatically
+  const storedKey = localStorage.getItem('db_api_key') || '';
+  if (!storedKey || storedKey === 'YOUR_API_KEY_HERE' || !storedKey.startsWith('sk-ant-')) {
+    localStorage.removeItem('db_api_key');
+    API_KEY = 'YOUR_API_KEY_HERE';
+    setTimeout(openSettings, 300);
+  } else {
+    API_KEY = storedKey;
+  }
+  loadFromCache();
+  fetchMarketData();
+});
+
+function updateDate() {
+  const now = new Date();
+  const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('headerDate').textContent = now.toLocaleDateString('en-US', opts);
+}
+
+function checkApiKey() {
+  if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
+    openSettings();
+  }
+}
+
+function openSettings() {
+  const overlay = document.getElementById('settingsOverlay');
+  overlay.style.display = 'flex';
+  overlay.style.setProperty('display', 'flex', 'important');
+  const input = document.getElementById('apiKeyInput');
+  if (API_KEY && API_KEY !== 'YOUR_API_KEY_HERE') {
+    input.value = API_KEY;
+    document.getElementById('keyStatus').innerHTML = '<span style="color:#1A7A4A;">&#10003; Key saved</span>';
+  } else {
+    input.value = '';
+    document.getElementById('keyStatus').textContent = '';
+  }
+  setTimeout(() => input.focus(), 100);
+}
+
+function closeSettings() {
+  document.getElementById('settingsOverlay').style.display = 'none';
+}
+
+function saveApiKey() {
+  const val = document.getElementById('apiKeyInput').value.trim();
+  if (!val) {
+    document.getElementById('keyStatus').innerHTML = '<span style="color:#C0392B;">Please enter a key.</span>';
+    return;
+  }
+  API_KEY = val;
+  localStorage.setItem('db_api_key', val);
+  document.getElementById('keyStatus').innerHTML = '<span style="color:#1A7A4A;">&#10003; Saved!</span>';
+  setTimeout(() => {
+    closeSettings();
+    refreshAll();
+  }, 600);
+}
+
+// --- TABS ---
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// --- MARKET DATA ---
+async function fetchMarketData() {
+  const proxies = [
+    sym => `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=1d`,
+    sym => `https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=1d`
+  ];
+
+  for (const ticker of MARKET_TICKERS) {
+    for (const proxy of proxies) {
+      try {
+        const res = await fetch(proxy(ticker.symbol));
+        if (!res.ok) continue;
+        const data = await res.json();
+        const meta = data?.chart?.result?.[0]?.meta;
+        if (!meta) continue;
+        const price = meta.regularMarketPrice;
+        const prev = meta.chartPreviousClose || meta.previousClose;
+        const change = prev ? ((price - prev) / prev * 100) : null;
+        renderMarket(ticker.id, price, change, ticker.type);
+        break;
+      } catch(e) { /* try next */ }
+    }
+  }
+
+  // BVAL via Claude API search
+  fetchBVAL();
+}
+
+function renderMarket(id, price, changePct, type) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  let display = '';
+  if (type === 'yield') {
+    display = price.toFixed(2) + '%';
+  } else if (price > 1000) {
+    display = price.toLocaleString('en-US', { maximumFractionDigits: 0 });
+  } else {
+    display = price.toFixed(2);
+  }
+  if (changePct !== null) {
+    const sign = changePct >= 0 ? '+' : '';
+    const cls = changePct > 0.05 ? 'up' : changePct < -0.05 ? 'down' : 'flat';
+    el.innerHTML = `${display} <span class="${cls}" style="font-size:10px;">${sign}${changePct.toFixed(2)}%</span>`;
+  } else {
+    el.textContent = display;
+  }
+}
+
+async function fetchBVAL() {
+  if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') return;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY, 'anthropic-version': '2023-06-01', 'anthropic-beta': 'interop-20250514' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{
+          role: 'user',
+          content: 'Search for the latest Philippine BVAL (Bloomberg Valuation) benchmark rates for the 5-year and 10-year tenors. Return ONLY a JSON object like: {"bval5": "6.21%", "bval10": "6.58%"}. No other text.'
+        }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.filter(b => b.type === 'text').map(b => b.text).join('');
+    if (text) {
+      const match = text.match(/\{[^}]+\}/);
+      if (match) {
+        const parsed = JSON.parse(match[0]);
+        if (parsed.bval5) document.getElementById('m-bval5').textContent = parsed.bval5;
+        if (parsed.bval10) document.getElementById('m-bval10').textContent = parsed.bval10;
+      }
+    }
+  } catch(e) { /* silent fail */ }
+}
+
+// --- NEWS FETCHING ---
+async function refreshAll() {
+  if (isRefreshing) return;
+  if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
+    openSettings();
+    return;
+  }
+  isRefreshing = true;
+  const btn = document.getElementById('refreshBtn');
+  const icon = document.getElementById('refreshIcon');
+  btn.disabled = true;
+  icon.classList.add('spinning');
+
+  // Show loading skeletons
+  showSummaryLoading();
+  SECTIONS.forEach(s => showSectionLoading(s.id));
+
+  // Fetch all sections in parallel
+  const promises = SECTIONS.map(s => fetchSection(s));
+  await Promise.allSettled(promises);
+
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+  document.getElementById('lastUpdated').textContent = `Updated ${timeStr}`;
+  localStorage.setItem('db_cache', JSON.stringify(cachedData));
+  localStorage.setItem('db_last_updated', timeStr);
+
+  // Rebuild summary
+  buildSummaryTab();
+
+  isRefreshing = false;
+  btn.disabled = false;
+  icon.classList.remove('spinning');
+}
+
+async function fetchSection(section) {
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-beta': 'interop-20250514'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: section.prompt }]
+      })
+    });
+
+    if (!res.ok) throw new Error('API error ' + res.status);
+    const data = await res.json();
+    const text = data.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
+
+    // Parse JSON from response
+    let parsed = null;
+    try {
+      const clean = text.replace(/```json|```/g, '').trim();
+      parsed = JSON.parse(clean);
+    } catch(e) {
+      const match = text.match(/\{[\s\S]*\}/);
+      if (match) parsed = JSON.parse(match[0]);
+    }
+
+    if (!parsed) throw new Error('No JSON in response');
+
+    cachedData[section.id] = parsed;
+    renderSection(section, parsed);
+    updateSummaryCard(section, parsed.lead);
+
+  } catch(err) {
+    console.error('Error fetching', section.id, err);
+    renderSectionError(section.id);
+    updateSummaryCardError(section);
+  }
+}
+
+// --- RENDER ---
+function buildSummaryTab() {
+  const grid = document.getElementById('summaryGrid');
+  grid.innerHTML = '';
+  SECTIONS.forEach(s => {
+    const d = cachedData[s.id];
+    if (d && d.lead) {
+      grid.appendChild(buildLeadCard(s, d.lead, true));
+    }
+  });
+  if (grid.children.length === 0) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><strong>No stories loaded</strong>Hit Refresh to fetch today\'s news.</div>';
+  }
+}
+
+function showSummaryLoading() {
+  const grid = document.getElementById('summaryGrid');
+  grid.innerHTML = '';
+  SECTIONS.forEach(() => {
+    grid.appendChild(makeSkeleton());
+  });
+}
+
+function updateSummaryCard(section, lead) {
+  const grid = document.getElementById('summaryGrid');
+  const existing = grid.querySelector(`[data-section="${section.id}"]`);
+  const card = buildLeadCard(section, lead, true);
+  if (existing) { existing.replaceWith(card); }
+  else { grid.appendChild(card); }
+}
+
+function updateSummaryCardError(section) {
+  const grid = document.getElementById('summaryGrid');
+  const existing = grid.querySelector(`[data-section="${section.id}"]`);
+  const div = document.createElement('div');
+  div.setAttribute('data-section', section.id);
+  div.className = 'loading-card';
+  div.innerHTML = `<div class="empty-state"><strong>${section.label}</strong>Could not load stories. Try refreshing.</div>`;
+  if (existing) existing.replaceWith(div);
+  else grid.appendChild(div);
+}
+
+function buildLeadCard(section, lead, isSummary) {
+  const div = document.createElement('div');
+  div.className = 'lead-card';
+  div.setAttribute('data-section', section.id);
+
+  const url = lead.url && lead.url.startsWith('http') ? lead.url : '#';
+  const seeAll = isSummary ? `<a class="see-all" href="#" onclick="jumpToSection('${section.id}'); return false;">See all ${section.label} stories →</a>` : '';
+
+  div.innerHTML = `
+    <div class="card-top">
+      <span class="section-badge" style="background:${hexToLight(section.color)};color:${section.color};">${section.badge}</span>
+      <span class="lead-tag">Lead</span>
+    </div>
+    <div class="card-headline">${escHtml(lead.headline)}</div>
+    <div class="card-summary">${escHtml(lead.summary)}</div>
+    <div class="card-footer">
+      <span class="source-tag">${escHtml(lead.source || 'News')}</span>
+      <a class="read-link" href="${url}" target="_blank" rel="noopener">Read full story →</a>
+    </div>
+    ${seeAll}
+  `;
+  return div;
+}
+
+function renderSection(section, data) {
+  const panel = document.getElementById('panel-' + section.id);
+  panel.innerHTML = '';
+
+  // Lead story
+  const leadHdr = document.createElement('div');
+  leadHdr.className = 'section-hdr';
+  leadHdr.innerHTML = `<span class="section-name">Lead story</span><div class="section-rule"></div>`;
+  panel.appendChild(leadHdr);
+  panel.appendChild(buildLeadCard(section, data.lead, false));
+
+  // Supporting articles
+  if (data.articles && data.articles.length) {
+    const artHdr = document.createElement('div');
+    artHdr.className = 'section-hdr';
+    artHdr.style.marginTop = '24px';
+    artHdr.innerHTML = `<span class="section-name">More stories</span><div class="section-rule"></div>`;
+    panel.appendChild(artHdr);
+
+    const grid = document.createElement('div');
+    grid.className = 'article-grid';
+    data.articles.forEach(a => {
+      const url = a.url && a.url.startsWith('http') ? a.url : '#';
+      const card = document.createElement('div');
+      card.className = 'article-card';
+      card.innerHTML = `
+        <div class="card-headline">${escHtml(a.headline)}</div>
+        <div class="card-summary">${escHtml(a.summary)}</div>
+        <div class="card-footer">
+          <span class="source-tag">${escHtml(a.source || 'News')}</span>
+          <a class="read-link" href="${url}" target="_blank" rel="noopener">Read →</a>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+    panel.appendChild(grid);
+  }
+}
+
+function showSectionLoading(id) {
+  const panel = document.getElementById('panel-' + id);
+  panel.innerHTML = '';
+  const hdr = document.createElement('div');
+  hdr.className = 'section-hdr';
+  hdr.innerHTML = `<span class="section-name">Lead story</span><div class="section-rule"></div>`;
+  panel.appendChild(hdr);
+  panel.appendChild(makeSkeleton(true));
+  const artHdr = document.createElement('div');
+  artHdr.className = 'section-hdr';
+  artHdr.style.marginTop = '24px';
+  artHdr.innerHTML = `<span class="section-name">More stories</span><div class="section-rule"></div>`;
+  panel.appendChild(artHdr);
+  const grid = document.createElement('div');
+  grid.className = 'article-grid';
+  grid.appendChild(makeSkeleton(false));
+  grid.appendChild(makeSkeleton(false));
+  panel.appendChild(grid);
+}
+
+function renderSectionError(id) {
+  const panel = document.getElementById('panel-' + id);
+  panel.innerHTML = '<div class="empty-state"><strong>Could not load stories</strong>There was an error fetching this section. Try refreshing.</div>';
+}
+
+function makeSkeleton(isLead = false) {
+  const div = document.createElement('div');
+  div.className = 'loading-card';
+  div.innerHTML = `
+    <div class="skeleton skel-badge" style="margin-bottom:4px;"></div>
+    <div class="skeleton skel-title"></div>
+    <div class="skeleton skel-line" style="margin-top:4px;"></div>
+    ${isLead ? '<div class="skeleton skel-line"></div><div class="skeleton skel-line"></div>' : ''}
+    <div class="skeleton skel-line-short"></div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px;">
+      <div class="skeleton" style="height:12px;width:60px;border-radius:4px;"></div>
+      <div class="skeleton" style="height:12px;width:80px;border-radius:4px;"></div>
+    </div>
+  `;
+  return div;
+}
+
+function loadFromCache() {
+  const lastUpdated = localStorage.getItem('db_last_updated');
+  if (lastUpdated) {
+    document.getElementById('lastUpdated').textContent = `Updated ${lastUpdated}`;
+  }
+  if (Object.keys(cachedData).length > 0) {
+    SECTIONS.forEach(s => {
+      if (cachedData[s.id]) renderSection(s, cachedData[s.id]);
+    });
+    buildSummaryTab();
+  }
+}
+
+function jumpToSection(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const sectionIndex = SECTIONS.findIndex(s => s.id === id);
+  if (tabs[sectionIndex + 1]) tabs[sectionIndex + 1].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// --- UTILS ---
+function escHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function hexToLight(hex) {
+  // Return a very light version of the color for badge bg
+  const lightMap = {
+    '#1A3A5C': '#E8EFF6',
+    '#2A5A3A': '#E8F5EE',
+    '#5A3A1A': '#F6EFE8',
+    '#1A5A3A': '#E8F5EE',
+    '#3A1A5A': '#EFE8F6',
+    '#5A1A1A': '#F6E8E8'
+  };
+  return lightMap[hex] || '#F0F0F0';
+}
+</script>
+</body>
+</html>
