@@ -293,8 +293,11 @@ function switchTab(id, el) {
 async function fetchMarketData() {
   for (const ticker of MARKET_TICKERS) {
     try {
-      const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker.symbol)}?interval=1d&range=1d`;
-      const res = await fetch(url);
+      const res = await fetch('/api/news', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ type: 'market', symbol: ticker.symbol })
+      });
       if (!res.ok) continue;
       const data = await res.json();
       const meta = data?.chart?.result?.[0]?.meta;
@@ -329,9 +332,8 @@ async function fetchBVAL() {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        type: 'news',
         max_tokens: 300,
-        tools: [{type:'web_search_20250305', name:'web_search'}],
         messages: [{role:'user', content:'Search for the latest Philippine BVAL benchmark rates for 5-year and 10-year tenors today. Return ONLY this JSON: {"bval5":"6.21%","bval10":"6.58%"}. No other text.'}]
       })
     });
@@ -373,9 +375,8 @@ async function fetchSection(section) {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        type: 'news',
         max_tokens: 1000,
-        tools: [{type:'web_search_20250305', name:'web_search'}],
         messages: [{role:'user', content: section.prompt}]
       })
     });
