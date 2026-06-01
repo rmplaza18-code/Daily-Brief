@@ -20,7 +20,7 @@ const handler = async (req, res) => {
 
   if (type === 'news') {
     const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) return res.status(500).json({ error: 'API key not configured' });
+    if (!apiKey) return res.status(500).json({ error: 'API key not configured on server' });
 
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -32,7 +32,7 @@ const handler = async (req, res) => {
           'anthropic-beta': 'interop-20250514'
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-5',
+          model: 'claude-haiku-4-5-20251001',
           max_tokens: max_tokens || 1000,
           tools: [{ type: 'web_search_20250305', name: 'web_search' }],
           messages: messages
