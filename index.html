@@ -20,26 +20,19 @@
     --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
   }
   body { font-family: var(--font-sans); background: var(--bg); color: var(--text-primary); min-height: 100vh; font-size: 16px; line-height: 1.7; }
-
   .header { background: var(--accent); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
   .header-left { display: flex; flex-direction: column; gap: 2px; }
   .header-title { font-family: var(--font-serif); font-size: 26px; font-weight: 600; color: #fff; letter-spacing: 0.02em; }
   .header-date { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 0.05em; text-transform: uppercase; }
   .header-right { display: flex; align-items: center; gap: 10px; }
   .last-updated { font-size: 11px; color: rgba(255,255,255,0.5); }
-  .btn {
-    display: flex; align-items: center; gap: 6px;
-    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
-    color: #fff; font-family: var(--font-sans); font-size: 12px; font-weight: 500;
-    padding: 7px 14px; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.15s;
-  }
+  .btn { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: var(--font-sans); font-size: 12px; font-weight: 500; padding: 7px 14px; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.15s; }
   .btn:hover { background: rgba(255,255,255,0.2); }
   .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-icon { padding: 7px 10px; font-size: 15px; }
+  .btn-icon { padding: 7px 11px; font-size: 15px; }
   .btn svg { width: 13px; height: 13px; }
   .spinning { animation: spin 1s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
   .market-strip { background: #112236; padding: 10px 32px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; align-items: center; flex-wrap: wrap; row-gap: 6px; }
   .market-strip::-webkit-scrollbar { display: none; }
   .market-group { display: flex; gap: 20px; align-items: center; }
@@ -48,24 +41,19 @@
   .market-lbl { font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.07em; }
   .market-val { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.9); }
   .up { color: #4EC98A; } .down { color: #F07070; } .flat { color: rgba(255,255,255,0.4); }
-
   .nav-wrap { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 0 32px; display: flex; overflow-x: auto; scrollbar-width: none; position: sticky; top: 57px; z-index: 99; }
   .nav-wrap::-webkit-scrollbar { display: none; }
-  .nav-tab { font-size: 13px; font-weight: 400; color: var(--text-muted); padding: 12px 16px; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; letter-spacing: 0.02em; }
+  .nav-tab { font-size: 13px; font-weight: 400; color: var(--text-muted); padding: 12px 16px; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; }
   .nav-tab:hover { color: var(--text-secondary); }
   .nav-tab.active { color: var(--accent); font-weight: 500; border-bottom-color: var(--accent); }
-
   .main { max-width: 1100px; margin: 0 auto; padding: 28px 32px 60px; }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
-
   .section-hdr { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; margin-top: 32px; }
   .section-hdr:first-child { margin-top: 0; }
   .section-name { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
   .section-rule { flex: 1; height: 1px; background: var(--border); }
-
   .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-
   .lead-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); border-top: 3px solid var(--accent); display: flex; flex-direction: column; gap: 10px; }
   .card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .section-badge { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; padding: 3px 8px; border-radius: 4px; }
@@ -79,22 +67,17 @@
   .read-link:visited { color: var(--text-muted); }
   .see-all { font-size: 12px; color: var(--accent-mid); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; }
   .see-all:hover { color: var(--accent); }
-
   .article-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 680px) { .article-grid { grid-template-columns: 1fr; } }
   .article-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; }
   .article-card .card-headline { font-size: 15px; }
   .article-card .card-summary { font-size: 13px; }
-
   .loading-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
   .skeleton { background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--border) 50%, var(--bg-secondary) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
   @keyframes shimmer { to { background-position: -200% 0; } }
-  .skel-title { height: 16px; width: 85%; } .skel-line { height: 12px; width: 100%; } .skel-line-short { height: 12px; width: 65%; } .skel-badge { height: 20px; width: 80px; }
-
-  .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 13px; }
-  .empty-state strong { display: block; font-size: 15px; color: var(--text-secondary); margin-bottom: 6px; }
-
-  /* SETTINGS MODAL */
+  .skel-title { height: 18px; width: 85%; } .skel-line { height: 14px; width: 100%; } .skel-line-short { height: 14px; width: 65%; } .skel-badge { height: 22px; width: 80px; }
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 14px; }
+  .empty-state strong { display: block; font-size: 16px; color: var(--text-secondary); margin-bottom: 6px; }
   .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 999; align-items: center; justify-content: center; }
   .overlay.open { display: flex; }
   .modal { background: #fff; border-radius: 12px; padding: 28px 32px; width: 480px; max-width: 90vw; }
@@ -103,17 +86,12 @@
   .modal-close { background: none; border: none; cursor: pointer; font-size: 22px; color: #999; line-height: 1; padding: 0 4px; }
   .modal label { font-size: 13px; color: #333; font-weight: 500; display: block; margin-bottom: 6px; }
   .modal p { font-size: 12px; color: #888; margin-bottom: 12px; }
-  .modal input[type=password] { width: 100%; font-size: 13px; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-sans); margin-bottom: 8px; color: var(--text-primary); }
+  .modal input { width: 100%; font-size: 13px; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-sans); margin-bottom: 8px; color: var(--text-primary); }
   .modal-status { font-size: 12px; min-height: 18px; margin-bottom: 14px; }
   .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
   .btn-cancel { font-size: 13px; padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fff; cursor: pointer; font-family: var(--font-sans); color: #555; }
   .btn-save { font-size: 13px; padding: 8px 18px; border: none; border-radius: var(--radius-sm); background: var(--accent); color: #fff; cursor: pointer; font-family: var(--font-sans); font-weight: 500; }
-
-  @media (max-width: 600px) {
-    .header { padding: 12px 16px; } .market-strip { padding: 8px 16px; }
-    .nav-wrap { padding: 0 16px; } .main { padding: 20px 16px 60px; }
-    .summary-grid { grid-template-columns: 1fr; } .header-title { font-size: 18px; }
-  }
+  @media (max-width: 600px) { .header { padding: 12px 16px; } .market-strip { padding: 8px 16px; } .nav-wrap { padding: 0 16px; } .main { padding: 20px 16px 60px; } .summary-grid { grid-template-columns: 1fr; } .header-title { font-size: 20px; } }
 </style>
 </head>
 <body>
@@ -125,7 +103,7 @@
       <button class="modal-close" onclick="closeSettings()">&#x2715;</button>
     </div>
     <label>Anthropic API Key</label>
-    <p>Get your key at <a href="https://console.anthropic.com" target="_blank" style="color:#2E5F8A;">console.anthropic.com</a> → API Keys. Make sure billing is enabled.</p>
+    <p>Get your key at <a href="https://console.anthropic.com" target="_blank" style="color:#2E5F8A;">console.anthropic.com</a> &rarr; API Keys. Make sure billing is enabled.</p>
     <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." />
     <div class="modal-status" id="keyStatus"></div>
     <div class="modal-actions">
@@ -189,10 +167,7 @@
 <main class="main">
   <div class="tab-panel active" id="panel-summary">
     <div class="summary-grid" id="summaryGrid">
-      <div class="empty-state" style="grid-column:1/-1">
-        <strong>No stories loaded yet</strong>
-        Hit Refresh to fetch today's top stories across all sections.
-      </div>
+      <div class="empty-state" style="grid-column:1/-1"><strong>No stories loaded yet</strong>Hit Refresh to fetch today's top stories.</div>
     </div>
   </div>
   <div class="tab-panel" id="panel-ph"></div>
@@ -205,288 +180,255 @@
 </main>
 
 <script>
-const SECTIONS = [
-  { id:'ph', label:'PH Deals & Markets', badge:'PH Deals', color:'#1A3A5C', bgLight:'#E8EFF6',
-    prompt:`You are a financial news analyst. Search for the latest news TODAY about: Philippine stock market, M&A deals, capital markets, IPOs, bonds, and business news in the Philippines. Focus on major conglomerates: Ayala, SM, ICTSI, Megaworld, JG Summit, San Miguel, PLDT, Globe Telecom, Aboitiz, Metro Pacific. Prioritize sources: BusinessWorld, Philippine Daily Inquirer, Philippine Star, Manila Bulletin, Rappler, ABS-CBN News, Manila Times, Nikkei Asia, Reuters, Bloomberg.\n\nReturn ONLY a raw JSON object (no markdown, no backticks, no <cite> tags, no citation markers of any kind):\n{"lead":{"headline":"...","summary":"4-5 sentence detailed summary with deal sizes, context, and implications","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}\nReturn 1 lead and 3-4 articles.`
+var SECTIONS = [
+  { id:'ph', label:'PH Deals & Markets', badge:'PH Deals', color:'#1A3A5C', bg:'#E8EFF6',
+    prompt:'You are a financial news analyst. Search for the latest news TODAY about Philippine stock market, M&A deals, capital markets, IPOs, bonds, and business news in the Philippines. Focus on Ayala, SM, ICTSI, Megaworld, JG Summit, San Miguel, PLDT, Globe, Aboitiz, Metro Pacific. Sources: BusinessWorld, Philippine Daily Inquirer, Philippine Star, Manila Bulletin, Rappler, ABS-CBN News, Manila Times, Nikkei Asia, Reuters, Bloomberg. Return ONLY a raw JSON object with no markdown, no backticks, no citation tags, no <cite> tags whatsoever: {"lead":{"headline":"...","summary":"4-5 sentence detailed summary with deal sizes and context","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}. Return 1 lead and 3-4 articles. Only JSON, nothing else.'
   },
-  { id:'ib', label:'IB & PE Transactions', badge:'IB & PE', color:'#2A5A3A', bgLight:'#E8F5EE',
-    prompt:`You are a financial news analyst. Search for the latest news TODAY about: investment banking deals, M&A transactions, private equity buyouts, LBOs, fundraising, IPOs globally with focus on US and Asia. Include deal values, advisors, strategic rationale.\n\nReturn ONLY a raw JSON object (no markdown, no backticks, no <cite> tags, no citation markers of any kind):\n{"lead":{"headline":"...","summary":"4-5 sentence detailed summary with deal sizes, advisors, strategic rationale","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}\nReturn 1 lead and 3-4 articles.`
+  { id:'ib', label:'IB & PE Transactions', badge:'IB & PE', color:'#2A5A3A', bg:'#E8F5EE',
+    prompt:'You are a financial news analyst. Search for the latest news TODAY about investment banking deals, M&A transactions, private equity buyouts, LBOs, fundraising, IPOs globally with focus on US and Asia. Include deal values, advisors, strategic rationale. Return ONLY a raw JSON object with no markdown, no backticks, no citation tags, no <cite> tags whatsoever: {"lead":{"headline":"...","summary":"4-5 sentence detailed summary with deal sizes and advisors","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}. Return 1 lead and 3-4 articles. Only JSON, nothing else.'
   },
-  { id:'infra', label:'Infrastructure', badge:'Infrastructure', color:'#5A3A1A', bgLight:'#F6EFE8',
-    prompt:`You are a financial news analyst. Search for the latest news TODAY about: infrastructure deals, project finance, toll roads, airports, ports, water utilities, transport, infrastructure investment globally and in Southeast Asia/Philippines.\n\nReturn ONLY a raw JSON object (no markdown, no backticks, no <cite> tags, no citation markers of any kind):\n{"lead":{"headline":"...","summary":"4-5 sentence detailed summary with project size and financing structure","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}\nReturn 1 lead and 3-4 articles.`
+  { id:'infra', label:'Infrastructure', badge:'Infrastructure', color:'#5A3A1A', bg:'#F6EFE8',
+    prompt:'You are a financial news analyst. Search for the latest news TODAY about infrastructure deals, project finance, toll roads, airports, ports, water utilities, transport globally and in Southeast Asia. Return ONLY a raw JSON object with no markdown, no backticks, no citation tags, no <cite> tags whatsoever: {"lead":{"headline":"...","summary":"4-5 sentence detailed summary with project size and financing","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}. Return 1 lead and 3-4 articles. Only JSON, nothing else.'
   },
-  { id:'energy', label:'Renewables & Energy', badge:'Energy', color:'#1A5A3A', bgLight:'#E8F5EE',
-    prompt:`You are a financial news analyst. Search for the latest news TODAY about: renewable energy deals, solar, wind, energy transition, power sector M&A, energy policy, oil & gas, and the Philippine energy sector.\n\nReturn ONLY a raw JSON object (no markdown, no backticks, no <cite> tags, no citation markers of any kind):\n{"lead":{"headline":"...","summary":"4-5 sentence detailed summary with capacity, investment size, and policy implications","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}\nReturn 1 lead and 3-4 articles.`
+  { id:'energy', label:'Renewables & Energy', badge:'Energy', color:'#1A5A3A', bg:'#E8F5EE',
+    prompt:'You are a financial news analyst. Search for the latest news TODAY about renewable energy deals, solar, wind, energy transition, power sector M&A, energy policy, oil and gas, and the Philippine energy sector. Return ONLY a raw JSON object with no markdown, no backticks, no citation tags, no <cite> tags whatsoever: {"lead":{"headline":"...","summary":"4-5 sentence detailed summary with capacity and investment size","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}. Return 1 lead and 3-4 articles. Only JSON, nothing else.'
   },
-  { id:'tech', label:'Technology', badge:'Tech', color:'#3A1A5A', bgLight:'#EFE8F6',
-    prompt:`You are a financial news analyst. Search for the latest news TODAY about: technology M&A, AI deals, startup funding, Big Tech earnings/strategy, semiconductor industry, and tech policy with financial/investment implications.\n\nReturn ONLY a raw JSON object (no markdown, no backticks, no <cite> tags, no citation markers of any kind):\n{"lead":{"headline":"...","summary":"4-5 sentence detailed summary covering deal value and market impact","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}\nReturn 1 lead and 3-4 articles.`
+  { id:'tech', label:'Technology', badge:'Tech', color:'#3A1A5A', bg:'#EFE8F6',
+    prompt:'You are a financial news analyst. Search for the latest news TODAY about technology M&A, AI deals, startup funding, Big Tech strategy, semiconductor industry, and tech policy with financial implications. Return ONLY a raw JSON object with no markdown, no backticks, no citation tags, no <cite> tags whatsoever: {"lead":{"headline":"...","summary":"4-5 sentence detailed summary covering deal value and market impact","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}. Return 1 lead and 3-4 articles. Only JSON, nothing else.'
   },
-  { id:'geo', label:'Geopolitics', badge:'Geopolitics', color:'#5A1A1A', bgLight:'#F6E8E8',
-    prompt:`You are a financial news analyst. Search for the latest news TODAY about: US-China relations, trade wars, tariffs, Southeast Asia geopolitics, Philippine geopolitical developments, global macro policy, central bank decisions (Fed, BSP), and geopolitical risks relevant to financial markets.\n\nReturn ONLY a raw JSON object (no markdown, no backticks, no <cite> tags, no citation markers of any kind):\n{"lead":{"headline":"...","summary":"4-5 sentence detailed summary covering geopolitical situation and financial implications","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}\nReturn 1 lead and 3-4 articles.`
+  { id:'geo', label:'Geopolitics', badge:'Geopolitics', color:'#5A1A1A', bg:'#F6E8E8',
+    prompt:'You are a financial news analyst. Search for the latest news TODAY about US-China relations, trade wars, tariffs, Southeast Asia geopolitics, Philippine geopolitical developments, global macro policy, Fed and BSP decisions. Return ONLY a raw JSON object with no markdown, no backticks, no citation tags, no <cite> tags whatsoever: {"lead":{"headline":"...","summary":"4-5 sentence detailed summary covering geopolitical situation and financial implications","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}. Return 1 lead and 3-4 articles. Only JSON, nothing else.'
   },
-  { id:'sports', label:'Sports Business', badge:'Sports Biz', color:'#1A3A5C', bgLight:'#E8EFF6',
-    prompt:`You are a financial news analyst. Search for the latest news TODAY about: sports M&A, team valuations and sales, sports media rights deals, league expansions, sports private equity, and the business of sports globally.\n\nReturn ONLY a raw JSON object (no markdown, no backticks, no <cite> tags, no citation markers of any kind):\n{"lead":{"headline":"...","summary":"4-5 sentence detailed summary with transaction value and industry implications","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}\nReturn 1 lead and 3-4 articles.`
+  { id:'sports', label:'Sports Business', badge:'Sports Biz', color:'#1A3A5C', bg:'#E8EFF6',
+    prompt:'You are a financial news analyst. Search for the latest news TODAY about sports M&A, team valuations and sales, sports media rights deals, league expansions, sports private equity, and the business of sports globally. Return ONLY a raw JSON object with no markdown, no backticks, no citation tags, no <cite> tags whatsoever: {"lead":{"headline":"...","summary":"4-5 sentence detailed summary with transaction value and implications","source":"Publication","url":"https://..."},"articles":[{"headline":"...","summary":"2 sentence summary","source":"Publication","url":"https://..."}]}. Return 1 lead and 3-4 articles. Only JSON, nothing else.'
   }
 ];
 
-const MARKET_TICKERS = [
-  {id:'m-psei', symbol:'PSEI.PS', type:'price'},
-  {id:'m-sp500', symbol:'^GSPC', type:'price'},
-  {id:'m-nasdaq', symbol:'^IXIC', type:'price'},
-  {id:'m-dow', symbol:'^DJI', type:'price'},
-  {id:'m-vix', symbol:'^VIX', type:'price'},
-  {id:'m-usdphp', symbol:'PHP=X', type:'price'},
-  {id:'m-dxy', symbol:'DX-Y.NYB', type:'price'},
-  {id:'m-oil', symbol:'CL=F', type:'price'},
-  {id:'m-us5y', symbol:'^FVX', type:'yield'},
-  {id:'m-us10y', symbol:'^TNX', type:'yield'}
+var TICKERS = [
+  {id:'m-psei',symbol:'PSEI.PS',type:'price'},
+  {id:'m-sp500',symbol:'^GSPC',type:'price'},
+  {id:'m-nasdaq',symbol:'^IXIC',type:'price'},
+  {id:'m-dow',symbol:'^DJI',type:'price'},
+  {id:'m-vix',symbol:'^VIX',type:'price'},
+  {id:'m-usdphp',symbol:'PHP=X',type:'price'},
+  {id:'m-dxy',symbol:'DX-Y.NYB',type:'price'},
+  {id:'m-oil',symbol:'CL=F',type:'price'},
+  {id:'m-us5y',symbol:'^FVX',type:'yield'},
+  {id:'m-us10y',symbol:'^TNX',type:'yield'}
 ];
 
-let cachedData = {};
-let isRefreshing = false;
+var cachedData = {};
+var isRefreshing = false;
 
-try { cachedData = JSON.parse(localStorage.getItem('db_cache') || '{}'); } catch(e) {}
+try { cachedData = JSON.parse(localStorage.getItem('db_cache') || '{}'); } catch(e) { cachedData = {}; }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const now = new Date();
+document.addEventListener('DOMContentLoaded', function() {
+  var now = new Date();
   document.getElementById('headerDate').textContent = now.toLocaleDateString('en-US', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const last = localStorage.getItem('db_last_updated');
+  var last = localStorage.getItem('db_last_updated');
   if (last) document.getElementById('lastUpdated').textContent = 'Updated ' + last;
   if (Object.keys(cachedData).length > 0) {
-    SECTIONS.forEach(s => { if (cachedData[s.id]) renderSection(s, cachedData[s.id]); });
+    SECTIONS.forEach(function(s) { if (cachedData[s.id]) renderSection(s, cachedData[s.id]); });
     buildSummaryTab();
   }
   fetchMarketData();
 });
 
-// --- SETTINGS ---
 function openSettings() {
-  const overlay = document.getElementById('settingsOverlay');
-  overlay.classList.add('open');
+  document.getElementById('settingsOverlay').classList.add('open');
   document.getElementById('keyStatus').textContent = '';
   document.getElementById('apiKeyInput').value = '';
-  setTimeout(() => document.getElementById('apiKeyInput').focus(), 50);
+  setTimeout(function() { document.getElementById('apiKeyInput').focus(); }, 50);
 }
-function closeSettings() {
-  document.getElementById('settingsOverlay').classList.remove('open');
-}
+function closeSettings() { document.getElementById('settingsOverlay').classList.remove('open'); }
 function saveApiKey() {
-  const val = document.getElementById('apiKeyInput').value.trim();
-  if (!val || !val.startsWith('sk-ant-')) {
+  var val = document.getElementById('apiKeyInput').value.trim();
+  if (!val || val.indexOf('sk-ant-') !== 0) {
     document.getElementById('keyStatus').innerHTML = '<span style="color:#C0392B;">Please enter a valid key starting with sk-ant-</span>';
     return;
   }
   localStorage.setItem('db_api_key', val);
   document.getElementById('keyStatus').innerHTML = '<span style="color:#1A7A4A;">&#10003; Saved!</span>';
-  setTimeout(() => { closeSettings(); refreshAll(); }, 600);
+  setTimeout(function() { closeSettings(); refreshAll(); }, 600);
 }
 
-// --- TABS ---
 function switchTab(id, el) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
   document.getElementById('panel-' + id).classList.add('active');
   el.classList.add('active');
 }
 
-// --- MARKET DATA ---
-async function fetchMarketData() {
-  for (const ticker of MARKET_TICKERS) {
-    try {
-      const res = await fetch('/api/news', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ type: 'market', symbol: ticker.symbol })
-      });
-      if (!res.ok) continue;
-      const data = await res.json();
-      const meta = data?.chart?.result?.[0]?.meta;
-      if (!meta) continue;
-      const price = meta.regularMarketPrice;
-      const prev = meta.chartPreviousClose || meta.previousClose;
-      const change = prev ? ((price - prev) / prev * 100) : null;
+function fetchMarketData() {
+  TICKERS.forEach(function(ticker) {
+    fetch('/api/news', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({type:'market', symbol:ticker.symbol})
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      var meta = data && data.chart && data.chart.result && data.chart.result[0] && data.chart.result[0].meta;
+      if (!meta) return;
+      var price = meta.regularMarketPrice;
+      var prev = meta.chartPreviousClose || meta.previousClose;
+      var change = prev ? ((price - prev) / prev * 100) : null;
       renderMarket(ticker.id, price, change, ticker.type);
-    } catch(e) {}
-  }
-  fetchBVAL();
+    }).catch(function() {});
+  });
 }
 
 function renderMarket(id, price, changePct, type) {
-  const el = document.getElementById(id);
+  var el = document.getElementById(id);
   if (!el || price == null) return;
-  let display = type === 'yield' ? price.toFixed(2) + '%' : price > 1000 ? price.toLocaleString('en-US', {maximumFractionDigits:0}) : price.toFixed(2);
+  var display = type === 'yield' ? price.toFixed(2) + '%' : price > 1000 ? price.toLocaleString('en-US', {maximumFractionDigits:0}) : price.toFixed(2);
   if (changePct !== null) {
-    const sign = changePct >= 0 ? '+' : '';
-    const cls = changePct > 0.05 ? 'up' : changePct < -0.05 ? 'down' : 'flat';
-    el.innerHTML = `${display} <span class="${cls}" style="font-size:10px;">${sign}${changePct.toFixed(2)}%</span>`;
+    var sign = changePct >= 0 ? '+' : '';
+    var cls = changePct > 0.05 ? 'up' : changePct < -0.05 ? 'down' : 'flat';
+    el.innerHTML = display + ' <span class="' + cls + '" style="font-size:10px;">' + sign + changePct.toFixed(2) + '%</span>';
   } else {
     el.textContent = display;
   }
 }
 
-async function fetchBVAL() {
-  const key = localStorage.getItem('db_api_key');
-  if (!key) return;
-  try {
-    const res = await fetch('/api/news', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        type: 'news',
-        max_tokens: 300,
-        messages: [{role:'user', content:'Search for the latest Philippine BVAL benchmark rates for 5-year and 10-year tenors today. Return ONLY this JSON: {"bval5":"6.21%","bval10":"6.58%"}. No other text.'}]
-      })
-    });
-    const data = await res.json();
-    const text = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-    const match = text.match(/\{[^}]+\}/);
-    if (match) {
-      const parsed = JSON.parse(match[0]);
-      if (parsed.bval5) document.getElementById('m-bval5').textContent = parsed.bval5;
-      if (parsed.bval10) document.getElementById('m-bval10').textContent = parsed.bval10;
-    }
-  } catch(e) {}
-}
-
-// --- NEWS ---
-async function refreshAll() {
-  const key = localStorage.getItem('db_api_key');
-  if (!key || !key.startsWith('sk-ant-')) { openSettings(); return; }
+function refreshAll() {
   if (isRefreshing) return;
   isRefreshing = true;
-  const btn = document.getElementById('refreshBtn');
-  const icon = document.getElementById('refreshIcon');
-  btn.disabled = true; icon.classList.add('spinning');
+  var btn = document.getElementById('refreshBtn');
+  var icon = document.getElementById('refreshIcon');
+  btn.disabled = true;
+  icon.classList.add('spinning');
   showSummaryLoading();
-  SECTIONS.forEach(s => showSectionLoading(s.id));
-  await Promise.allSettled(SECTIONS.map(s => fetchSection(s)));
-  const timeStr = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
-  document.getElementById('lastUpdated').textContent = 'Updated ' + timeStr;
-  localStorage.setItem('db_cache', JSON.stringify(cachedData));
-  localStorage.setItem('db_last_updated', timeStr);
-  buildSummaryTab();
-  isRefreshing = false; btn.disabled = false; icon.classList.remove('spinning');
+  SECTIONS.forEach(function(s) { showSectionLoading(s.id); });
+  var promises = SECTIONS.map(function(s) { return fetchSection(s); });
+  Promise.allSettled(promises).then(function() {
+    var timeStr = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+    document.getElementById('lastUpdated').textContent = 'Updated ' + timeStr;
+    localStorage.setItem('db_cache', JSON.stringify(cachedData));
+    localStorage.setItem('db_last_updated', timeStr);
+    buildSummaryTab();
+    isRefreshing = false;
+    btn.disabled = false;
+    icon.classList.remove('spinning');
+  });
 }
 
-async function fetchSection(section) {
-  const key = localStorage.getItem('db_api_key');
-  try {
-    const res = await fetch('/api/news', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        type: 'news',
-        max_tokens: 1000,
-        messages: [{role:'user', content: section.prompt}]
-      })
-    });
-    if (!res.ok) throw new Error('API error ' + res.status);
-    const data = await res.json();
-    const text = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-    // Strip cite tags from raw text before JSON parsing
-    const stripCite = s => !s ? s : s.replace(/<cite\s+index="[^"]*">[^<]*<\/cite>/g, '').replace(/<\/?cite[^>]*>/g, '').replace(/  +/g, ' ').trim();
-    const cleanedText = stripCite(text);
-    
-    let parsed = null;
-    try { parsed = JSON.parse(cleanedText.replace(/```json|```/g,'').trim()); } catch(e) {
-      const m = cleanedText.match(/\{[\s\S]*\}/); if (m) { try { parsed = JSON.parse(m[0]); } catch(e2) {} }
+function stripCite(str) {
+  if (!str) return str;
+  return str.replace(/<cite[^>]*>[^<]*<\/cite>/g, '').replace(/<\/?cite[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function fetchSection(section) {
+  return fetch('/api/news', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({type:'news', max_tokens:1000, messages:[{role:'user', content:section.prompt}]})
+  }).then(function(r) {
+    if (!r.ok) throw new Error('API error ' + r.status);
+    return r.json();
+  }).then(function(data) {
+    var text = (data.content || []).filter(function(b) { return b.type === 'text'; }).map(function(b) { return b.text; }).join('');
+    var parsed = null;
+    try {
+      var clean = text.replace(/```json/g,'').replace(/```/g,'').trim();
+      parsed = JSON.parse(clean);
+    } catch(e) {
+      var match = text.match(/\{[\s\S]*\}/);
+      if (match) { try { parsed = JSON.parse(match[0]); } catch(e2) {} }
     }
-    // Also clean parsed fields as backup
-    if (parsed) {
-      if (parsed.lead) { parsed.lead.headline = stripCite(parsed.lead.headline); parsed.lead.summary = stripCite(parsed.lead.summary); }
-      if (parsed.articles) parsed.articles = parsed.articles.map(a => ({...a, headline: stripCite(a.headline), summary: stripCite(a.summary)}));
+    if (!parsed) throw new Error('No JSON in response');
+    if (parsed.lead) {
+      parsed.lead.headline = stripCite(parsed.lead.headline);
+      parsed.lead.summary = stripCite(parsed.lead.summary);
     }
-    if (!parsed) throw new Error('No JSON');
+    if (parsed.articles) {
+      parsed.articles = parsed.articles.map(function(a) {
+        return { headline: stripCite(a.headline), summary: stripCite(a.summary), source: a.source, url: a.url };
+      });
+    }
     cachedData[section.id] = parsed;
     renderSection(section, parsed);
     updateSummaryCard(section, parsed.lead);
-  } catch(err) {
+  }).catch(function(err) {
     console.error(section.id, err);
     renderSectionError(section.id);
     updateSummaryCardError(section);
-  }
+  });
 }
 
-// --- RENDER ---
 function buildSummaryTab() {
-  const grid = document.getElementById('summaryGrid');
+  var grid = document.getElementById('summaryGrid');
   grid.innerHTML = '';
-  SECTIONS.forEach(s => { if (cachedData[s.id]?.lead) grid.appendChild(buildLeadCard(s, cachedData[s.id].lead, true)); });
+  SECTIONS.forEach(function(s) {
+    if (cachedData[s.id] && cachedData[s.id].lead) grid.appendChild(buildLeadCard(s, cachedData[s.id].lead, true));
+  });
   if (!grid.children.length) grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><strong>No stories loaded</strong>Hit Refresh to fetch today\'s news.</div>';
 }
 
 function showSummaryLoading() {
-  const grid = document.getElementById('summaryGrid');
+  var grid = document.getElementById('summaryGrid');
   grid.innerHTML = '';
-  SECTIONS.forEach(() => grid.appendChild(makeSkeleton(true)));
+  SECTIONS.forEach(function() { grid.appendChild(makeSkeleton(true)); });
 }
 
 function updateSummaryCard(section, lead) {
-  const grid = document.getElementById('summaryGrid');
-  const existing = grid.querySelector(`[data-section="${section.id}"]`);
-  const card = buildLeadCard(section, lead, true);
+  var grid = document.getElementById('summaryGrid');
+  var existing = grid.querySelector('[data-section="' + section.id + '"]');
+  var card = buildLeadCard(section, lead, true);
   if (existing) existing.replaceWith(card); else grid.appendChild(card);
 }
 
 function updateSummaryCardError(section) {
-  const grid = document.getElementById('summaryGrid');
-  const existing = grid.querySelector(`[data-section="${section.id}"]`);
-  const div = document.createElement('div');
+  var grid = document.getElementById('summaryGrid');
+  var existing = grid.querySelector('[data-section="' + section.id + '"]');
+  var div = document.createElement('div');
   div.setAttribute('data-section', section.id);
   div.className = 'loading-card';
-  div.innerHTML = `<div class="empty-state"><strong>${section.label}</strong>Could not load. Try refreshing.</div>`;
+  div.innerHTML = '<div class="empty-state"><strong>' + section.label + '</strong>Could not load. Try refreshing.</div>';
   if (existing) existing.replaceWith(div); else grid.appendChild(div);
 }
 
-function cleanText(str) {
-  if (!str) return '';
-  // Remove cite tags in all their forms
-  str = str.replace(/<cite\s+index="[^"]*">[\s\S]*?<\/cite>/gi, '');
-  str = str.replace(/<\/?cite[^>]*>/gi, '');
-  str = str.replace(/\s+/g, ' ').trim();
-  return str;
-}
-
 function buildLeadCard(section, lead, isSummary) {
-  lead = { ...lead, headline: cleanText(lead.headline), summary: cleanText(lead.summary) };
-  const div = document.createElement('div');
+  var div = document.createElement('div');
   div.className = 'lead-card';
   div.setAttribute('data-section', section.id);
   div.style.borderTopColor = section.color;
-  const url = lead.url?.startsWith('http') ? lead.url : '#';
-  div.innerHTML = `
-    <div class="card-top">
-      <span class="section-badge" style="background:${section.bgLight};color:${section.color};">${section.badge}</span>
-      <span class="lead-tag">Lead</span>
-    </div>
-    <div class="card-headline">${esc(lead.headline)}</div>
-    <div class="card-summary">${esc(lead.summary)}</div>
-    <div class="card-footer">
-      <span class="source-tag">${esc(lead.source||'News')}</span>
-      <a class="read-link" href="${url}" target="_blank" rel="noopener">Read full story →</a>
-    </div>
-    ${isSummary ? `<a class="see-all" href="#" onclick="jumpToSection('${section.id}');return false;">See all ${section.label} stories →</a>` : ''}
-  `;
+  var url = lead.url && lead.url.indexOf('http') === 0 ? lead.url : '#';
+  var seeAll = isSummary ? '<a class="see-all" href="#" onclick="jumpToSection(\'' + section.id + '\');return false;">See all ' + section.label + ' stories &rarr;</a>' : '';
+  div.innerHTML =
+    '<div class="card-top">' +
+      '<span class="section-badge" style="background:' + section.bg + ';color:' + section.color + ';">' + section.badge + '</span>' +
+      '<span class="lead-tag">Lead</span>' +
+    '</div>' +
+    '<div class="card-headline">' + esc(lead.headline) + '</div>' +
+    '<div class="card-summary">' + esc(lead.summary) + '</div>' +
+    '<div class="card-footer">' +
+      '<span class="source-tag">' + esc(lead.source || 'News') + '</span>' +
+      '<a class="read-link" href="' + url + '" target="_blank" rel="noopener">Read full story &rarr;</a>' +
+    '</div>' + seeAll;
   return div;
 }
 
 function renderSection(section, data) {
-  const panel = document.getElementById('panel-' + section.id);
+  var panel = document.getElementById('panel-' + section.id);
   panel.innerHTML = '';
-  const h1 = document.createElement('div'); h1.className='section-hdr';
-  h1.innerHTML=`<span class="section-name">Lead story</span><div class="section-rule"></div>`;
+  var h1 = document.createElement('div'); h1.className = 'section-hdr';
+  h1.innerHTML = '<span class="section-name">Lead story</span><div class="section-rule"></div>';
   panel.appendChild(h1);
   panel.appendChild(buildLeadCard(section, data.lead, false));
-  if (data.articles?.length) {
-    const h2 = document.createElement('div'); h2.className='section-hdr'; h2.style.marginTop='24px';
-    h2.innerHTML=`<span class="section-name">More stories</span><div class="section-rule"></div>`;
+  if (data.articles && data.articles.length) {
+    var h2 = document.createElement('div'); h2.className = 'section-hdr'; h2.style.marginTop = '24px';
+    h2.innerHTML = '<span class="section-name">More stories</span><div class="section-rule"></div>';
     panel.appendChild(h2);
-    const grid = document.createElement('div'); grid.className='article-grid';
-    data.articles.forEach(a => {
-      a = { ...a, headline: cleanText(a.headline), summary: cleanText(a.summary) };
-      const url = a.url?.startsWith('http') ? a.url : '#';
-      const card = document.createElement('div'); card.className='article-card';
-      card.innerHTML=`<div class="card-headline">${esc(a.headline)}</div><div class="card-summary">${esc(a.summary)}</div><div class="card-footer"><span class="source-tag">${esc(a.source||'News')}</span><a class="read-link" href="${url}" target="_blank" rel="noopener">Read →</a></div>`;
+    var grid = document.createElement('div'); grid.className = 'article-grid';
+    data.articles.forEach(function(a) {
+      var url = a.url && a.url.indexOf('http') === 0 ? a.url : '#';
+      var card = document.createElement('div'); card.className = 'article-card';
+      card.innerHTML =
+        '<div class="card-headline">' + esc(a.headline) + '</div>' +
+        '<div class="card-summary">' + esc(a.summary) + '</div>' +
+        '<div class="card-footer">' +
+          '<span class="source-tag">' + esc(a.source || 'News') + '</span>' +
+          '<a class="read-link" href="' + url + '" target="_blank" rel="noopener">Read &rarr;</a>' +
+        '</div>';
       grid.appendChild(card);
     });
     panel.appendChild(grid);
@@ -494,15 +436,15 @@ function renderSection(section, data) {
 }
 
 function showSectionLoading(id) {
-  const panel = document.getElementById('panel-' + id);
+  var panel = document.getElementById('panel-' + id);
   panel.innerHTML = '';
-  const h = document.createElement('div'); h.className='section-hdr';
-  h.innerHTML=`<span class="section-name">Lead story</span><div class="section-rule"></div>`;
+  var h = document.createElement('div'); h.className = 'section-hdr';
+  h.innerHTML = '<span class="section-name">Lead story</span><div class="section-rule"></div>';
   panel.appendChild(h); panel.appendChild(makeSkeleton(true));
-  const h2 = document.createElement('div'); h2.className='section-hdr'; h2.style.marginTop='24px';
-  h2.innerHTML=`<span class="section-name">More stories</span><div class="section-rule"></div>`;
+  var h2 = document.createElement('div'); h2.className = 'section-hdr'; h2.style.marginTop = '24px';
+  h2.innerHTML = '<span class="section-name">More stories</span><div class="section-rule"></div>';
   panel.appendChild(h2);
-  const g = document.createElement('div'); g.className='article-grid';
+  var g = document.createElement('div'); g.className = 'article-grid';
   g.appendChild(makeSkeleton(false)); g.appendChild(makeSkeleton(false));
   panel.appendChild(g);
 }
@@ -512,22 +454,25 @@ function renderSectionError(id) {
 }
 
 function makeSkeleton(isLead) {
-  const div = document.createElement('div'); div.className='loading-card';
-  div.innerHTML=`<div class="skeleton skel-badge" style="margin-bottom:4px;"></div><div class="skeleton skel-title"></div><div class="skeleton skel-line" style="margin-top:4px;"></div>${isLead?'<div class="skeleton skel-line"></div><div class="skeleton skel-line"></div>':''}<div class="skeleton skel-line-short"></div><div style="display:flex;justify-content:space-between;margin-top:8px;"><div class="skeleton" style="height:12px;width:60px;border-radius:4px;"></div><div class="skeleton" style="height:12px;width:80px;border-radius:4px;"></div></div>`;
+  var div = document.createElement('div'); div.className = 'loading-card';
+  div.innerHTML = '<div class="skeleton skel-badge" style="margin-bottom:4px;"></div><div class="skeleton skel-title"></div><div class="skeleton skel-line" style="margin-top:4px;"></div>' + (isLead ? '<div class="skeleton skel-line"></div><div class="skeleton skel-line"></div>' : '') + '<div class="skeleton skel-line-short"></div><div style="display:flex;justify-content:space-between;margin-top:8px;"><div class="skeleton" style="height:12px;width:60px;border-radius:4px;"></div><div class="skeleton" style="height:12px;width:80px;border-radius:4px;"></div></div>';
   return div;
 }
 
 function jumpToSection(id) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
   document.getElementById('panel-' + id).classList.add('active');
-  const idx = SECTIONS.findIndex(s => s.id === id);
-  document.querySelectorAll('.nav-tab')[idx + 1]?.classList.add('active');
+  var idx = SECTIONS.findIndex(function(s) { return s.id === id; });
+  var tabs = document.querySelectorAll('.nav-tab');
+  if (tabs[idx + 1]) tabs[idx + 1].classList.add('active');
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
 function esc(str) {
   if (!str) return '';
-  // Strip any <cite ...>...</cite> tags from AI responses
-  str = str.replace(/<cite[^>]*>.*?<\/cite>/gi, '');
-  str = str.replace
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
