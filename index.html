@@ -298,16 +298,28 @@ function refreshAll() {
   icon.classList.add('spinning');
   showSummaryLoading();
   SECTIONS.forEach(function(s) { showSectionLoading(s.id); });
+  // Fire sections sequentially with delay to avoid rate limits
+  var results = [];
+  function fetchNext(idx) {
+    if (idx >= SECTIONS.length) {
+      var timeStr = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+      document.getElementById('lastUpdated').textContent = 'Updated ' + timeStr;
+      localStorage.setItem('db_cache', JSON.stringify(cachedData));
+      localStorage.setItem('db_last_updated', timeStr);
+      buildSummaryTab();
+      isRefreshing = false;
+      document.getElementById('refreshBtn').disabled = false;
+      document.getElementById('refreshIcon').classList.remove('spinning');
+      return;
+    }
+    fetchSection(SECTIONS[idx]).finally(function() {
+      setTimeout(function() { fetchNext(idx + 1); }, 1500);
+    });
+  }
+  fetchNext(0);
+  return;
   var promises = SECTIONS.map(function(s) { return fetchSection(s); });
   Promise.allSettled(promises).then(function() {
-    var timeStr = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
-    document.getElementById('lastUpdated').textContent = 'Updated ' + timeStr;
-    localStorage.setItem('db_cache', JSON.stringify(cachedData));
-    localStorage.setItem('db_last_updated', timeStr);
-    buildSummaryTab();
-    isRefreshing = false;
-    btn.disabled = false;
-    icon.classList.remove('spinning');
   });
 }
 
